@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<!--
+  Baldwin County, Alabama — Cloudflare custom page: 5XX Errors
+  ---------------------------------------------------------------------------------
+  REQUIRED: the CLOUDFLARE_ERROR_500S_BOX token (inside the .error-box div below) must
+  stay in the page. Cloudflare swaps it for the error details. Do not remove it.
+
+  Companion files: baldwin-challenge.html (Interactive / Managed Challenge) and
+  baldwin-noninteractive-challenge.html (Non-Interactive Challenge).
+
+  Cloudflare inlines external resources when it fetches this page, so every external
+  URL must return 200 OK. Total size (including the inlined logo) must stay under 1.43 MB.
+
+  LOGO: the <img> in .brand loads from Cloudinary. The header is navy, so the logo
+  should be the WHITE version. Display width is set in .brand img (280px).
+  If the page exceeds the size limit, request a resized copy from Cloudinary, e.g.
+    .../image/upload/w_600/v1777638845/Background_rqlcz8.png
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Temporarily Unavailable | Baldwin County, Alabama</title>
+
+  <!-- Brand web font: Nunito (Web Copy). Falls back to Arial (brand Word font). -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap">
+
+  <style>
+    :root {
+      /* Brand palette — Brand Standards Manual */
+      --navy: #1E376C;        /* PMS 288 C  (primary) */
+      --red: #E7503D;         /* PMS 7625 C */
+      --sky: #B7DCE1;         /* PMS 628 C  */
+      /* PMS 337 C intentionally not used: manual says never pair it with PMS 628 C. */
+
+      --navy-tint: #e9ecf3;
+      --red-tint: #fdf3f1;
+      --sky-tint: #eef7f8;
+      --ink: #1b2338;
+      --muted: #5a6478;
+      --surface: #ffffff;
+      --bg: #f5f8fa;
+      --line: #dde3ea;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body { margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: "Nunito", Arial, Helvetica, sans-serif;
+      font-size: 16px;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ---------- Header band ---------- */
+    .masthead {
+      color: #fff;
+      padding: 28px 16px 26px;
+      text-align: center;
+      border-bottom: 4px solid var(--red);
+      background: var(--navy);
+    }
+
+    /* Logo — padding keeps the brand's clear space around the mark */
+    .brand {
+      display: inline-block;
+      padding: 10px 14px;
+    }
+    .brand img {
+      display: block;
+      width: 280px;           /* scales proportionally; never stretch (brand rule) */
+      max-width: 100%;
+      height: auto;
+    }
+
+    /* ---------- Main ---------- */
+    main {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      padding: 40px 16px 48px;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 560px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      box-shadow: 0 6px 24px rgba(30, 55, 108, 0.08);
+      overflow: hidden;
+    }
+
+    /* Red accent on this page to signal a problem (challenge pages use sky blue) */
+    .card-accent {
+      height: 6px;
+      background: var(--red);
+    }
+
+    .card-body { padding: 32px 32px 28px; }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 0 14px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: var(--red-tint);
+      color: var(--navy);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .eyebrow svg { flex: none; }
+
+    h1 {
+      margin: 0 0 10px;
+      color: var(--navy);
+      font-size: 28px;
+      font-weight: 800;
+      line-height: 1.2;
+      text-wrap: balance;
+    }
+
+    .lede {
+      margin: 0 0 24px;
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    /* ---------- What to do ---------- */
+    .steps {
+      list-style: none;
+      margin: 0 0 24px;
+      padding: 0;
+      display: grid;
+      gap: 10px;
+    }
+    .steps li {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      font-size: 15px;
+      color: var(--ink);
+    }
+    .steps .num {
+      flex: none;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--navy);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 700;
+      display: grid;
+      place-items: center;
+      margin-top: 1px;
+    }
+
+    .actions { margin: 0 0 24px; }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 11px 20px;
+      border: 0;
+      border-radius: 6px;
+      background: var(--navy);
+      color: #fff;
+      font: inherit;
+      font-size: 15px;
+      font-weight: 700;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .btn:hover, .btn:focus { background: var(--red); color: #fff; }
+    .btn:focus-visible { outline: 3px solid var(--sky); outline-offset: 2px; }
+
+    /* ---------- Cloudflare error details ---------- */
+    .details-label {
+      margin: 0 0 8px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .error-box {
+      margin: 0 0 24px;
+      padding: 16px 18px;
+      background: var(--navy-tint);
+      border: 1px solid #c9d1e1;
+      border-radius: 8px;
+      font-size: 14px;
+      color: var(--ink);
+      overflow-wrap: anywhere;
+    }
+    .error-box > * { max-width: 100%; }
+    .error-box h1, .error-box h2, .error-box h3 {
+      margin: 0 0 6px;
+      font-size: 16px;
+      color: var(--navy);
+    }
+    .error-box p { margin: 0 0 6px; }
+    .error-box p:last-child { margin-bottom: 0; }
+
+    .help {
+      margin: 0;
+      padding: 16px 18px;
+      border-left: 4px solid var(--red);
+      background: var(--red-tint);
+      border-radius: 0 6px 6px 0;
+      font-size: 14px;
+      color: var(--ink);
+    }
+    .help strong { color: var(--navy); }
+
+    a { color: var(--navy); font-weight: 700; }
+    a:hover, a:focus { color: var(--red); }
+
+    .ray {
+      margin-top: 22px;
+      padding-top: 16px;
+      border-top: 1px solid var(--line);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 6px 16px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .ray code {
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+      color: var(--ink);
+      background: var(--bg);
+      padding: 1px 6px;
+      border-radius: 4px;
+    }
+
+    /* ---------- Footer ---------- */
+    footer {
+      padding: 20px 16px 28px;
+      text-align: center;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    footer .rule {
+      width: 48px;
+      height: 3px;
+      margin: 0 auto 12px;
+      background: var(--red);
+      border-radius: 2px;
+    }
+
+    /* ---------- Small screens ---------- */
+    @media (max-width: 520px) {
+      .brand img { width: 230px; }
+      .card-body { padding: 24px 20px 22px; }
+      h1 { font-size: 24px; }
+      main { padding-top: 28px; }
+      .btn { width: 100%; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="masthead">
+    <span class="brand">
+      <img src="https://res.cloudinary.com/baldwincounty/image/upload/v1777638845/Background_rqlcz8.png"
+           alt="Baldwin County, Alabama">
+    </span>
+  </header>
+
+  <main>
+    <section class="card" aria-labelledby="title">
+      <div class="card-accent" aria-hidden="true"></div>
+      <div class="card-body">
+
+        <p class="eyebrow">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M12 3 2 20h20L12 3Z" fill="#E7503D"/>
+            <path d="M12 9.5v4.5" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="12" cy="17" r="1.2" fill="#fff"/>
+          </svg>
+          Temporarily unavailable
+        </p>
+
+        <h1 id="title">This service is having trouble right now</h1>
+        <p class="lede">
+          We're sorry, Baldwin County's site couldn't complete your request. This is a
+          problem on our end, not with your device or connection. It's usually resolved
+          within a few minutes.
+        </p>
+
+        <ol class="steps">
+          <li><span class="num">1</span><span>Wait a minute or two, then try again.</span></li>
+          <li><span class="num">2</span><span>If you were submitting a form or payment, check for a confirmation before resubmitting.</span></li>
+        </ol>
+
+        <p class="actions">
+          <!-- An empty href reloads the current page, so the button works without JavaScript. -->
+          <a class="btn" href="">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Try again
+          </a>
+        </p>
+
+        <p class="details-label">Error details</p>
+        <div class="error-box" role="region" aria-label="Error details">
+          ::CLOUDFLARE_ERROR_500S_BOX::
+        </div>
+
+        <p class="help">
+          <strong>Still not working?</strong> Contact the county and share the
+          reference ID below so our team can look into it.
+        </p>
+
+        <div class="ray">
+          <span>Reference ID: <code>::RAY_ID::</code></span>
+          <span>Baldwin County, Alabama</span>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="rule" aria-hidden="true"></div>
+    <!-- Confirm the URL below points to the county's main site before publishing. -->
+    &copy; Baldwin County, Alabama &middot; <a href="https://baldwincountyal.gov">baldwincountyal.gov</a>
+  </footer>
+
+</body>
+</html>
