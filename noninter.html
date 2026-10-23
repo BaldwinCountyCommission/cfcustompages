@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<!--
+  Baldwin County, Alabama — Cloudflare custom page: Non-Interactive (JS) Challenge
+  ---------------------------------------------------------------------------------
+  REQUIRED: the IM_UNDER_ATTACK_BOX token (inside the .challenge div below) must stay
+  in the page. Cloudflare swaps it for the automatic browser check. Do not remove it.
+
+  Use this file only for the Non-Interactive Challenge page. The Interactive / Managed
+  Challenge pages use the companion file, baldwin-challenge.html.
+
+  Cloudflare inlines external resources when it fetches this page, so every external
+  URL must return 200 OK. Total size (including the inlined logo) must stay under 1.43 MB.
+
+  LOGO: the <img> in .brand loads from Cloudinary. The header is navy, so the logo
+  should be the WHITE version. Display width is set in .brand img (280px).
+  If the page exceeds the size limit, request a resized copy from Cloudinary, e.g.
+    .../image/upload/w_600/v1777638845/Background_rqlcz8.png
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Security Check | Baldwin County, Alabama</title>
+
+  <!-- Brand web font: Nunito (Web Copy). Falls back to Arial (brand Word font). -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap">
+
+  <style>
+    :root {
+      /* Brand palette — Brand Standards Manual */
+      --navy: #1E376C;        /* PMS 288 C  (primary) */
+      --red: #E7503D;         /* PMS 7625 C */
+      --sky: #B7DCE1;         /* PMS 628 C  */
+      /* PMS 337 C intentionally not used: manual says never pair it with PMS 628 C. */
+
+      --navy-90: #34497b;
+      --navy-tint: #e9ecf3;
+      --sky-tint: #eef7f8;
+      --ink: #1b2338;
+      --muted: #5a6478;
+      --surface: #ffffff;
+      --bg: #f5f8fa;
+      --line: #dde3ea;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body { margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: "Nunito", Arial, Helvetica, sans-serif;
+      font-size: 16px;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ---------- Header band ---------- */
+    .masthead {
+      position: relative;
+      color: #fff;
+      padding: 28px 16px 26px;
+      text-align: center;
+      border-bottom: 4px solid var(--red);
+      background: var(--navy);
+    }
+
+    /* Logo — padding keeps the brand's clear space around the mark */
+    .brand {
+      display: inline-block;
+      padding: 10px 14px;
+    }
+    .brand img {
+      display: block;
+      width: 280px;           /* scales proportionally; never stretch (brand rule) */
+      max-width: 100%;
+      height: auto;
+    }
+
+    /* ---------- Main ---------- */
+    main {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      padding: 40px 16px 48px;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 560px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      box-shadow: 0 6px 24px rgba(30, 55, 108, 0.08);
+      overflow: hidden;
+    }
+
+    .card-accent {
+      height: 6px;
+      background: var(--sky);
+    }
+
+    .card-body { padding: 32px 32px 28px; }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 0 14px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: var(--sky-tint);
+      color: var(--navy);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .eyebrow svg { flex: none; }
+
+    h1 {
+      margin: 0 0 10px;
+      color: var(--navy);
+      font-size: 28px;
+      font-weight: 800;
+      line-height: 1.2;
+    }
+
+    .lede {
+      margin: 0 0 24px;
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    /* ---------- Challenge widget ---------- */
+    .challenge {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 90px;
+      padding: 18px 12px;
+      margin: 0 0 24px;
+      background: var(--navy-tint);
+      border: 1px dashed #b9c3d8;
+      border-radius: 8px;
+    }
+
+    /* Keep Cloudflare's injected widget centered and inside the card */
+    .challenge > * { max-width: 100%; }
+    #cf-wrapper, #challenge-stage, .cf-turnstile { margin: 0 auto; }
+
+    /* Indeterminate progress bar — signals the automatic check is running */
+    .progress {
+      position: relative;
+      height: 4px;
+      margin: -12px 0 14px;
+      background: var(--navy-tint);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .progress span {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 35%;
+      height: 100%;
+      background: var(--navy);
+      border-radius: 2px;
+    }
+
+    .status {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      margin: 0 0 24px;
+      font-size: 15px;
+      color: var(--ink);
+    }
+    .status .dot {
+      flex: none;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--red);
+    }
+
+    .help {
+      margin: 0;
+      padding: 16px 18px;
+      border-left: 4px solid var(--red);
+      background: #fdf3f1;
+      border-radius: 0 6px 6px 0;
+      font-size: 14px;
+      color: var(--ink);
+    }
+    .help strong { color: var(--navy); }
+
+    a { color: var(--navy); font-weight: 700; }
+    a:hover, a:focus { color: var(--red); }
+
+    .ray {
+      margin-top: 22px;
+      padding-top: 16px;
+      border-top: 1px solid var(--line);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 6px 16px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .ray code {
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+      color: var(--ink);
+      background: var(--bg);
+      padding: 1px 6px;
+      border-radius: 4px;
+    }
+
+    noscript .help { margin-bottom: 20px; }
+
+    /* ---------- Footer ---------- */
+    footer {
+      padding: 20px 16px 28px;
+      text-align: center;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    footer .rule {
+      width: 48px;
+      height: 3px;
+      margin: 0 auto 12px;
+      background: var(--red);
+      border-radius: 2px;
+    }
+
+    /* ---------- Small screens ---------- */
+    @media (max-width: 520px) {
+      .brand img { width: 230px; }
+      .card-body { padding: 24px 20px 22px; }
+      h1 { font-size: 24px; }
+      main { padding-top: 28px; }
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+      .eyebrow svg { animation: pulse 2.4s ease-in-out infinite; }
+      @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.45; } }
+      .status .dot { animation: pulse 1.6s ease-in-out infinite; }
+      .progress span { animation: slide 1.6s ease-in-out infinite; }
+      @keyframes slide { 0% { left: -35%; } 100% { left: 100%; } }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="masthead">
+    <span class="brand">
+      <img src="https://res.cloudinary.com/baldwincounty/image/upload/v1777638845/Background_rqlcz8.png"
+           alt="Baldwin County, Alabama">
+    </span>
+  </header>
+
+  <main>
+    <section class="card" aria-labelledby="title">
+      <div class="card-accent" aria-hidden="true"></div>
+      <div class="card-body">
+
+        <p class="eyebrow">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M12 2 4 5v6c0 5 3.4 9.4 8 11 4.6-1.6 8-6 8-11V5l-8-3Z" fill="#1E376C"/>
+            <path d="m8.5 12 2.5 2.5 4.5-5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Security check
+        </p>
+
+        <h1 id="title">Checking your connection</h1>
+        <p class="lede">
+          To protect Baldwin County's online services from automated traffic, we're
+          running a quick, automatic check. There's nothing you need to do. This usually
+          takes just a few seconds.
+        </p>
+
+        <noscript>
+          <p class="help"><strong>JavaScript is required.</strong> Please enable JavaScript
+          and cookies in your browser, then reload this page.</p>
+        </noscript>
+
+        <div class="challenge" role="region" aria-label="Verification">
+          ::IM_UNDER_ATTACK_BOX::
+        </div>
+
+        <div class="progress" aria-hidden="true"><span></span></div>
+
+        <p class="status" role="status">
+          <span class="dot" aria-hidden="true"></span>
+          Please keep this page open. You'll be taken to the page you requested automatically.
+        </p>
+
+        <p class="help">
+          <strong>Stuck on this page?</strong> Make sure cookies and JavaScript are enabled,
+          turn off VPNs or privacy extensions that block scripts, then reload the page.
+          If the problem continues, contact the county and share the reference ID below.
+        </p>
+
+        <div class="ray">
+          <span>Reference ID: <code>::RAY_ID::</code></span>
+          <span>Protected for Baldwin County, Alabama</span>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="rule" aria-hidden="true"></div>
+    <!-- Confirm the URL below points to the county's main site before publishing. -->
+    &copy; Baldwin County, Alabama &middot; <a href="https://baldwincountyal.gov">baldwincountyal.gov</a>
+  </footer>
+
+</body>
+</html>
